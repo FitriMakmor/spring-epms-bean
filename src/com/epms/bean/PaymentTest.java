@@ -16,7 +16,11 @@ public class PaymentTest {
         Employee employee4 = new Employee(4, "Eugene", 'M');
         
         
-        payment.executePayment(null);
+        
+        payment.init();
+//        payment.executePayment(employee4);
+//        payment.executePayment(employee2);
+//        payment.executePayment(employee3);
 		
         List<Transaction> transactions = payment.getEmployeeTransaction();
 
@@ -24,17 +28,17 @@ public class PaymentTest {
 
         while(iterator.hasNext()){
                 Transaction transaction = iterator.next();
-                System.out.println(transaction.getEmployeeID());
+                System.out.println(transaction.getAmount());
         }
 
         System.out.println("---------------------");
-        List<Transaction> transactions2 = payment.getEmployeeIndividualTransaction(new Employee(2, "Fatimah", 'F'));
-        Iterator<Transaction> iterator2 = transactions2.iterator();
-
-        while(iterator2.hasNext()){
-                Transaction transaction = iterator2.next();
-                System.out.println(transaction.getEmployeeID());
-        }
+//        List<Transaction> transactions2 = payment.getEmployeeIndividualTransaction(new Employee(2, "Fatimah", 'F'));
+//        Iterator<Transaction> iterator2 = transactions2.iterator();
+//
+//        while(iterator2.hasNext()){
+//                Transaction transaction = iterator2.next();
+//                System.out.println(transaction.getEmployeeID());
+//        }
         
 //        payment.setPayroll(employee1);
 //        payment.setPayroll(employee2);
