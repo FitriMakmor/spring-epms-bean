@@ -15,8 +15,6 @@ public class PaymentTest {
         Employee employee3 = new Employee(3, "Joe", 'M');
         Employee employee4 = new Employee(4, "Eugene", 'M');
         
-//        fsefsef
-        
         payment.init();
 //        payment.executePayment(employee4);
 //        payment.executePayment(employee2);

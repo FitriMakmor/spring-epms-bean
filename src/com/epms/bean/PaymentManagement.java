@@ -136,6 +136,9 @@ public class PaymentManagement {
     }
     
     public void executePayment(Employee employee) {
+    	
+    	System.out.println("Enter employee ID: ");
+//    	int employeeID = Scan. "";
         Payroll paymentPayroll = getEmployeePayroll(employee);
         if(paymentPayroll == null){
             setPayroll(employee);
