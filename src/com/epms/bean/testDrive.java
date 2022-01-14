@@ -14,10 +14,10 @@ public class testDrive {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+		ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
 		
 		
-		EmployeeManagement2 emp = (EmployeeManagement2)context.getBean("EmployeeManagement");
+		EmployeeManagement2 emp = (EmployeeManagement2)context.getBean("employeeManagement2");
 		List<Employee2> list = new ArrayList<Employee2>();
 		
 		Scanner s = new Scanner(System.in);
