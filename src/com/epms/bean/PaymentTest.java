@@ -21,15 +21,16 @@ public class PaymentTest {
 //        payment.executePayment(employee4);
 //        payment.executePayment(employee2);
 //        payment.executePayment(employee3);
+        payment.getEmployeeTransaction();
 		
-        List<Transaction> transactions = payment.getEmployeeTransaction();
-
-        Iterator<Transaction> iterator = transactions.iterator();
-
-        while(iterator.hasNext()){
-                Transaction transaction = iterator.next();
-                System.out.println(transaction.getAmount());
-        }
+//        List<Transaction> transactions = payment.getEmployeeTransaction();
+//
+//        Iterator<Transaction> iterator = transactions.iterator();
+//
+//        while(iterator.hasNext()){
+//                Transaction transaction = iterator.next();
+//                System.out.println(transaction.getAmount());
+//        }
 
         System.out.println("---------------------");
 //        List<Transaction> transactions2 = payment.getEmployeeIndividualTransaction(new Employee(2, "Fatimah", 'F'));

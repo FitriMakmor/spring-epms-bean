@@ -52,16 +52,29 @@ public class PaymentManagement {
 	}
     
     public List<Transaction> getEmployeeTransaction() {
+    	
+    	Iterator<Transaction> iterator = transactions.iterator();
+    	
+    	System.out.println("List of transaction");
+        while(iterator.hasNext()){
+            Transaction transaction = iterator.next();
+            String text = 
+            		"Employee ID: " + transaction.getEmployeeID() +
+            		", Transaction Amount: " + transaction.getAmount() + 
+            		", Transaction Date: " + transaction.getDate().toString();
+            System.out.println(text);
+        }
+        
         return transactions;
     }
     
     public Payroll getEmployeePayroll(Employee employee){
         if(payrolls.containsKey(employee.getEmployeeId())){
-            System.out.println("Payroll for "+employee.getName()+" found");
+            System.out.println("Payroll for "+ employee.getName()+" found");
             return payrolls.get(employee.getEmployeeId());
         }
         else{
-            System.out.println("Payroll for " +employee.getName()+" not found");
+            System.out.println("Payroll for " + employee.getName()+" not found");
             return null;
         }
     }
@@ -141,7 +154,7 @@ public class PaymentManagement {
 	        bw.newLine();
 	        bw.close();
 
-	    	System.out.println("Payement Executed Succesfully");
+	    	System.out.println("Payment Executed Succesfully");
 	    	
 	    }catch (IOException e) {
 	      System.out.println("An error occurred.");
