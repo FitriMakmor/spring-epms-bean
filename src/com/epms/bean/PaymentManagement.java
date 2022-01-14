@@ -43,8 +43,8 @@ public class PaymentManagement {
 					}  
 					
 				} 
-				
 				scan.close();
+				System.out.println("Transaction Data Read Successfully");
 		}  
 		catch(IOException e)  {  
 		e.printStackTrace();  
@@ -158,8 +158,7 @@ public class PaymentManagement {
         while(iterator.hasNext()){
             Transaction transaction = iterator.next();
 
-    //			if(transaction.getEmployeeID() == employee.getId()) {
-            if(transaction.getEmployeeID() == 1) { // assume id  = 1 lol
+			if(transaction.getEmployeeID() == employee.getEmployeeId()) {
                     individualTransactions.add(transaction);
             }
         }
