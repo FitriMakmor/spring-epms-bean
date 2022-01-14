@@ -31,7 +31,7 @@ public class PaymentTest {
 //        }
 
         System.out.println("---------------------");
-//        List<Transaction> transactions2 = payment.getEmployeeIndividualTransaction(new Employee(2, "Fatimah", 'F'));
+//        List<Transaction> transactions2 = payment.getEmployeeIndividualTransaction(2);
 //        Iterator<Transaction> iterator2 = transactions2.iterator();
 //
 //        while(iterator2.hasNext()){

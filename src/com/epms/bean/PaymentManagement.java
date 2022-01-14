@@ -166,7 +166,7 @@ public class PaymentManagement {
     }
     
     
-    public List<Transaction> getEmployeeIndividualTransaction(Employee employee) {
+    public List<Transaction> getEmployeeIndividualTransaction(int employeeId) {
         List<Transaction> individualTransactions = new ArrayList<Transaction>();
 
         Iterator<Transaction> iterator = transactions.iterator();
@@ -174,7 +174,7 @@ public class PaymentManagement {
         while(iterator.hasNext()){
             Transaction transaction = iterator.next();
 
-			if(transaction.getEmployeeID() == employee.getEmployeeId()) {
+			if(transaction.getEmployeeID() == employeeId) {
                     individualTransactions.add(transaction);
             }
         }
