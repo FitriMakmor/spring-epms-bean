@@ -1,23 +1,27 @@
 package com.epms.client;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.epms.bean.Employee;
 import com.epms.bean.EmployeeManagement;
 
 public class AdminUIClient {
 
     private static Integer menuInput;
     private static Scanner sc;
+    private static EmployeeManagement eM;
 
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
-//        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-//        EmployeeManagement employee= (EmployeeManagement) context.getBean("employeeManagementBean");
-//        System.out.println(employee.getEmployeeName());
         sc = new Scanner(System.in);
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
 
+        eM = (EmployeeManagement) context.getBean("employeeManagement");//read id
+		eM.initReadEmployeeFile();
+		eM.initReadAttendanceFile();
 
         System.out.println("\n\nWelcome to the Payroll Management System");
 
@@ -113,7 +117,7 @@ public class AdminUIClient {
     }
 
     public static void displayAttendanceList(){
-
+		eM.getAttendanceList();
     }
 
     public static void displayEmployeeTransactionLogs(){
@@ -121,36 +125,59 @@ public class AdminUIClient {
     }
 
     public static void displayEmployeeList(){
-
+    	eM.displayListOfEmployee();
     }
 
     public static void displayEmployeeDetails(){
-
+    	System.out.println("----------------------------");
+		System.out.print("Enter Employee Id to search: ");
+		int id = sc.nextInt();
+		System.out.println("----------------------------");
+		if(eM.getEmployee(id) != null) {
+			Employee e = eM.getEmployee(id);
+			System.out.println(e);
+		}else {
+			System.out.println("Record not found");
+		}
+		System.out.println("----------------------------");
     }
 
     public static void createNewEmployee(){
+    	System.out.print("Enter id: ");
+		int id = sc.nextInt();
+		sc.nextLine();
+		System.out.print("Enter name: ");
+		String name = sc.nextLine();
+		System.out.print("Enter gender(M/F): ");
+		char gender = sc.next().charAt(0);
 
+		eM.addEmployee(id, name, gender);
     }
 
     public static void displayEmployeePayrolls(){
-
+    	
     }
 
     public static void selectEmployeeToViewAttendance(){
-
+    	//getSpecific Attendance
+    	System.out.print("Enter Employee ID : ");
+    	int Id = sc.nextInt();
+    	eM.getAttendance(Id);
     }
 
     public static void selectEmployeeToMarkAttendance(){
-
+    	eM.markAttendance();
     }
 
     public static void selectEmployeeToDelete(){
-
+		System.out.println(eM.deleteEmployee());
     }
 
     public static void selectEmployeeToEdit(){
-
-    }
+    	if(eM.setEmployee()) {
+    		System.out.println("Record is updated successfully");
+    		}
+    	}
 
     public static void selectEmployeeToSetPayroll(){
 
