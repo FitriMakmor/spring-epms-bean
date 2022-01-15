@@ -1,6 +1,0 @@
-1001,Nadia,F
-1002,Az,F
-1003,Fit,L
-1004,Rez,L
-1005,Rehe,L
-1006,Ras,L
