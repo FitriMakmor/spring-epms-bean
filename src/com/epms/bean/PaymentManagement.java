@@ -1,5 +1,12 @@
 package com.epms.bean;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -8,27 +15,66 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-/**
- *
- * @author Rezamir
- */
 public class PaymentManagement {
     Payroll payroll;
     Employee employee;
     List<Transaction> transactions = new ArrayList<Transaction>();
     Map<Integer, Payroll> payrolls = new HashMap<>();
     
+    
+    FileInputStream transactionFile = null;
+    
+    
+    public void init() {
+		try {
+				transactionFile = new FileInputStream("transaction.txt");     
+				Scanner scan = new Scanner(transactionFile); 
+				while(scan.hasNextLine())  {
+					String line = scan.nextLine();
+					String[] words = line.split(",");
+					
+					String stringDate = words[2];  
+				    Date date;
+					try {
+						date = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy").parse(stringDate);
+						transactions.add(new Transaction(Integer.parseInt(words[0]), Double.parseDouble(words[1]), date));
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}  
+					
+				} 
+				scan.close();
+				System.out.println("Transaction Data Read Successfully");
+		}  
+		catch(IOException e)  {  
+		e.printStackTrace();  
+		}  
+	}
+    
     public List<Transaction> getEmployeeTransaction() {
+    	
+    	Iterator<Transaction> iterator = transactions.iterator();
+    	
+    	System.out.println("List of transaction");
+        while(iterator.hasNext()){
+            Transaction transaction = iterator.next();
+            String text = 
+            		"Employee ID: " + transaction.getEmployeeID() +
+            		", Transaction Amount: " + transaction.getAmount() + 
+            		", Transaction Date: " + transaction.getDate().toString();
+            System.out.println(text);
+        }
+        
         return transactions;
     }
     
     public Payroll getEmployeePayroll(Employee employee){
         if(payrolls.containsKey(employee.getEmployeeId())){
-            System.out.println("Payroll for "+employee.getName()+" found");
+            System.out.println("Payroll for "+ employee.getName()+" found");
             return payrolls.get(employee.getEmployeeId());
         }
         else{
-            System.out.println("Payroll for " +employee.getName()+" not found");
+            System.out.println("Payroll for " + employee.getName()+" not found");
             return null;
         }
     }
@@ -90,43 +136,37 @@ public class PaymentManagement {
     }
     
     public void executePayment(Employee employee) {
-        // get payroll by employee
-        // get total payroll for that employee
-        // add transaction by employee id
+    	
+    	System.out.println("Enter employee ID: ");
+//    	int employeeID = Scan. "";
         Payroll paymentPayroll = getEmployeePayroll(employee);
         if(paymentPayroll == null){
             setPayroll(employee);
             paymentPayroll = getEmployeePayroll(employee);
         }
         double amount = paymentPayroll.basicSalary + paymentPayroll.bonus + paymentPayroll.overtime + paymentPayroll.others;
-        Transaction transaction = new Transaction(employee.getEmployeeId(), amount, new Date());
-        transactions.add(transaction);
+        
+        try {
+			
+			BufferedWriter bw = new BufferedWriter(new FileWriter(new File("transaction.txt"), true));
+			Date date = new Date();
+			Transaction transaction = new Transaction(employee.getEmployeeId(), amount, date);
+	        transactions.add(transaction);
+	        String text = employee.getEmployeeId() + "," + amount + "," + date.toString();
+	        bw.write(text);
+	        bw.newLine();
+	        bw.close();
 
-        //double amount = get dari payroll
-        //Transaction transaction = new Transaction(employee.getEmployeeId(), amount, new Date());
-
-        //----- dummyy, suposely one transaction per execution -----------
-        //Transaction transaction = new Transaction(0, 0, new Date());
-        //Transaction transaction2 = new Transaction(3, 0, new Date());
-        //Transaction transaction3 = new Transaction(1, 0, new Date());
-
-        //transactions.add(transaction);
-        //transactions.add(transaction);
-        //transactions.add(transaction2);
-        //transactions.add(transaction3);
-        //transactions.add(transaction3);
-        //transactions.add(transaction3);
-        //transactions.add(transaction2);
-        //transactions.add(transaction2);
-        //transactions.add(transaction);
-        //transactions.add(transaction3);
-
-        //-- end dummy --
+	    	System.out.println("Payment Executed Succesfully");
+	    	
+	    }catch (IOException e) {
+	      System.out.println("An error occurred.");
+	      e.printStackTrace();
+	   }
     }
     
-   
     
-    public List<Transaction> getEmployeeIndividualTransaction(Employee employee) {
+    public List<Transaction> getEmployeeIndividualTransaction(int employeeId) {
         List<Transaction> individualTransactions = new ArrayList<Transaction>();
 
         Iterator<Transaction> iterator = transactions.iterator();
@@ -134,8 +174,7 @@ public class PaymentManagement {
         while(iterator.hasNext()){
             Transaction transaction = iterator.next();
 
-    //			if(transaction.getEmployeeID() == employee.getId()) {
-            if(transaction.getEmployeeID() == 1) { // assume id  = 1 lol
+			if(transaction.getEmployeeID() == employeeId) {
                     individualTransactions.add(transaction);
             }
         }
