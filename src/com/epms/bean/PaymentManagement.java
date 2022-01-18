@@ -139,6 +139,14 @@ public class PaymentManagement {
         }
     }
     
+    public void getEmployeePayrolls(){
+        for( int key: payrolls.keySet() ){
+            System.out.print(key+" ");
+            System.out.println(payrolls.get(key));
+            Payroll temp = payrolls.get(key);
+        }
+}
+    
     public void setPayroll(int employeeId){
     	System.out.println();
         Scanner s = new Scanner(System.in);
@@ -225,9 +233,9 @@ public class PaymentManagement {
     }
     
     public void executePayment(int employeeId) {
-    	System.out.println();
-    	System.out.println("Enter employee ID: ");
-    	
+//    	System.out.println();
+//    	System.out.println("Enter employee ID: ");
+//    	
         Payroll paymentPayroll = getEmployeePayroll(employeeId);
         if(paymentPayroll == null){
             setPayroll(employeeId);
