@@ -73,11 +73,19 @@ public class EmployeeManagement{
 			e.printStackTrace();  
 		} 
 	}
-	
+		
 	//add New Employee
-	public boolean addEmployee(int id, String name, char gender) {
-		writeEmployee(id,name,gender);
-		return arrayOfEmployee.add(new Employee(id, name, gender));
+	public boolean addEmployee() {
+		System.out.print("Enter id: ");
+		int id = input.nextInt();
+		System.out.print("Enter name: ");
+		String name = input2.nextLine();
+		System.out.print("Enter gender(M/F): ");
+		String gender = input2.nextLine();
+		
+		char g = gender.charAt(0);
+		writeEmployee(id,name,g);
+		return arrayOfEmployee.add(new Employee(id, name, g));
 	}
 	
 	//add New Employee at "employee.txt"
@@ -90,7 +98,7 @@ public class EmployeeManagement{
 				bw.write(text);
 				bw.newLine();
 				bw.close();
-			    System.out.println("Attedance Succesfully");
+			    System.out.println("Succesfully Add Employee in Employee Record");
 			    } catch (IOException e) {
 			      System.out.println("An error occurred.");
 			      e.printStackTrace();
@@ -177,7 +185,7 @@ public class EmployeeManagement{
 		   }
 	}
 	
-	//get Employee Details
+	//Old get Employee Details
 	public Employee getEmployee(int id) {
 		for(Employee e : arrayOfEmployee ) {
 			if(e.getEmployeeId() == id) {
@@ -249,12 +257,12 @@ public class EmployeeManagement{
 			System.out.println(" Employee List");
 			System.out.println("--------------------\n");
 			System.out
-					.println("----------------------------------------------------------------");
-			System.out.println("Employee ID\t Name\t Gender");
+					.println("-----------------------------------------------");
+			System.out.println("Employee ID\t Name\t\t Gender");
 			System.out
-					.println("----------------------------------------------------------------\n");
+					.println("-----------------------------------------------\n");
 			for(Employee str: arrayOfEmployee){
-				System.out.printf("%1$s\t\t\t%2$s\t\t%3$s\n",
+				System.out.printf("%1$s\t\t%2$s\t\t %3$s\n",
 						str.getEmployeeId(), str.getName(), str.getGender());
 			}	
 	   }

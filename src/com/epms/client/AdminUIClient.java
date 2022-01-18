@@ -143,15 +143,16 @@ public class AdminUIClient {
     }
 
     public static void createNewEmployee(){
-    	System.out.print("Enter id: ");
-		int id = sc.nextInt();
-		sc.nextLine();
-		System.out.print("Enter name: ");
-		String name = sc.nextLine();
-		System.out.print("Enter gender(M/F): ");
-		char gender = sc.next().charAt(0);
-
-		eM.addEmployee(id, name, gender);
+//    	System.out.print("Enter id: ");
+//		int id = sc.nextInt();
+//		sc.nextLine();
+//		System.out.print("Enter name: ");
+//		String name = sc.nextLine();
+//		System.out.print("Enter gender(M/F): ");
+//		char gender = sc.next().charAt(0);
+//
+//		eM.addEmployee(id, name, gender);
+    	eM.addEmployee();
     }
 
     public static void displayEmployeePayrolls(){
