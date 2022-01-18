@@ -23,36 +23,61 @@ public class PaymentManagement {
     
     
     FileInputStream transactionFile = null;
+    FileInputStream payrollFile = null;
     
     
-    public void init() {
+    public void loadTransactionData() {
 		try {
-				transactionFile = new FileInputStream("transaction.txt");     
-				Scanner scan = new Scanner(transactionFile); 
-				while(scan.hasNextLine())  {
-					String line = scan.nextLine();
-					String[] words = line.split(",");
-					
-					String stringDate = words[2];  
-				    Date date;
-					try {
-						date = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy").parse(stringDate);
-						transactions.add(new Transaction(Integer.parseInt(words[0]), Double.parseDouble(words[1]), date));
-					} catch (ParseException e) {
-						e.printStackTrace();
-					}  
-					
-				} 
-				scan.close();
-				System.out.println("Transaction Data Read Successfully");
+			transactionFile = new FileInputStream("transaction.txt");     
+			Scanner scan = new Scanner(transactionFile); 
+			while(scan.hasNextLine())  {
+				String line = scan.nextLine();
+				String[] words = line.split(",");
+				
+				String stringDate = words[2];  
+			    Date date;
+				try {
+					date = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy").parse(stringDate);
+					transactions.add(new Transaction(Integer.parseInt(words[0]), Double.parseDouble(words[1]), date));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			scan.close();
+			
+			
+			System.out.println("Transaction Data Loaded");
 		}  
 		catch(IOException e)  {  
-		e.printStackTrace();  
+			e.printStackTrace();  
 		}  
 	}
     
-    public List<Transaction> getEmployeeTransaction() {
+    public void loadPayrollData() {
     	
+    	try {
+    		payrollFile = new FileInputStream("payroll.txt");
+    		
+			Scanner scan = new Scanner(payrollFile);
+			while(scan.hasNextLine()){
+				String line = scan.nextLine();
+				String[] words = line.split(",");
+				Payroll temp = new Payroll(Integer.parseInt(words[0]), Double.parseDouble(words[1]), Double.parseDouble(words[2]), Double.parseDouble(words[3]), Double.parseDouble(words[4]));
+				payrolls.put(Integer.parseInt(words[0]), temp);
+			}
+			
+			scan.close();
+			
+			System.out.println("Payroll Data Loaded");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+    }
+    
+    public List<Transaction> getEmployeeTransaction() {
+    	System.out.println();
     	Iterator<Transaction> iterator = transactions.iterator();
     	
     	System.out.println("List of transaction");
@@ -68,22 +93,58 @@ public class PaymentManagement {
         return transactions;
     }
     
-    public Payroll getEmployeePayroll(Employee employee){
-        if(payrolls.containsKey(employee.getEmployeeId())){
-            System.out.println("Payroll for "+ employee.getName()+" found");
-            return payrolls.get(employee.getEmployeeId());
+    public List<Transaction> getEmployeeIndividualTransaction() {
+    	System.out.println();
+    	Scanner scan = new Scanner(System.in);
+    	boolean exist = false;
+    	
+    	System.out.println("Enter Employee ID: ");
+    	int employeeId = scan.nextInt();
+        
+    	
+    	List<Transaction> individualTransactions = new ArrayList<Transaction>();
+        
+        Iterator<Transaction> iterator = transactions.iterator();
+
+        while(iterator.hasNext()){
+            Transaction transaction = iterator.next();
+
+			if(transaction.getEmployeeID() == employeeId) {
+                    individualTransactions.add(transaction);
+                    exist = true;
+                    String text = 
+                    		"Employee ID: " + transaction.getEmployeeID() +
+                    		", Transaction Amount: " + transaction.getAmount() + 
+                    		", Transaction Date: " + transaction.getDate().toString();
+                    System.out.println(text);
+            }
         }
-        else{
-            System.out.println("Payroll for " + employee.getName()+" not found");
+        
+        if(!exist) {
+        	System.out.println("Transaction Data for Employee ID [" + employeeId + "] does not exists.");
+        }
+        
+        return individualTransactions;
+    }
+    
+    public Payroll getEmployeePayroll(int employeeId){
+    	System.out.println();
+    	
+        if(payrolls.containsKey(employeeId)){
+            System.out.println("Payroll for employee ID" + employeeId +" found");
+            return payrolls.get(employeeId);
+        }else{
+            System.out.println("Payroll for employee ID " + employeeId + " not found");
             return null;
         }
     }
     
-    public void setPayroll(Employee employee){
+    public void setPayroll(int employeeId){
+    	System.out.println();
         Scanner s = new Scanner(System.in);
-        if(payrolls.containsKey(employee.getEmployeeId())){
-            System.out.println("Current payroll is");
-            payrolls.get(employee.getEmployeeId()).toString();
+        
+        if(payrolls.containsKey(employeeId)){
+            System.out.println("Current payroll is " + payrolls.get(employeeId).toString());
             
             System.out.println("Enter updated basic salary: ");
             double basic = s.nextDouble();
@@ -97,8 +158,9 @@ public class PaymentManagement {
             System.out.println("Enter others amount: ");
             double others = s.nextDouble();
 
-            payroll = new Payroll(employee.getEmployeeId(), basic, ot, bonus, others);
-            payrolls.put(employee.getEmployeeId(), payroll);
+            payroll = new Payroll(employeeId, basic, ot, bonus, others);
+            payrolls.put(employeeId, payroll);
+            updatePayrolls();
             
         }
         else{
@@ -117,32 +179,59 @@ public class PaymentManagement {
 
                 System.out.println("Enter others amount: ");
                 double others = s.nextDouble();
-                payroll = new Payroll(employee.getEmployeeId(), basic, ot, bonus, others);
-                payrolls.put(employee.getEmployeeId(), payroll);
+                payroll = new Payroll(employeeId, basic, ot, bonus, others);
+                payrolls.put(employeeId, payroll);
                 System.out.println(payroll.toString());
+                updatePayrolls();
             }else{
                 System.out.println("Understood have a nice day");
             }
         }
     }
     
-    public void deletePayroll(Employee employee){
-        if(!payrolls.containsKey(employee.getEmployeeId())){
+    public void deletePayroll(){
+    	
+    	Scanner scan = new Scanner(System.in);
+    	
+    	System.out.println("Enter Employee ID: ");
+    	int employeeId = scan.nextInt();
+    	
+        if(!payrolls.containsKey(employeeId)){
             return;
         }
         else{
-            payrolls.remove(employee.getEmployeeId());
+            payrolls.remove(employeeId);
+            updatePayrolls();
         }
     }
     
-    public void executePayment(Employee employee) {
-    	
+    public void updatePayrolls(){
+        try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter(new File("payroll.txt"), false));
+            for( int key: payrolls.keySet() ){
+                System.out.print(key+" ");
+                System.out.println(payrolls.get(key));
+                Payroll temp = payrolls.get(key);
+                String update = temp.getEmployeeID()+","+temp.getBasicSalary()+","+temp.getOvertime()+","+temp.getBonus()+","+temp.getBonus();
+                bw.write(update);
+                bw.newLine();
+            }
+            bw.close();
+            System.out.println("Payrolls updated successfully!");
+        }catch(IOException e){
+            System.out.println("An error occured while updating the payrolls");
+            e.printStackTrace();
+        }
+    }
+    
+    public void executePayment(int employeeId) {
+    	System.out.println();
     	System.out.println("Enter employee ID: ");
-//    	int employeeID = Scan. "";
-        Payroll paymentPayroll = getEmployeePayroll(employee);
+    	
+        Payroll paymentPayroll = getEmployeePayroll(employeeId);
         if(paymentPayroll == null){
-            setPayroll(employee);
-            paymentPayroll = getEmployeePayroll(employee);
+            setPayroll(employeeId);
+            paymentPayroll = getEmployeePayroll(employeeId);
         }
         double amount = paymentPayroll.basicSalary + paymentPayroll.bonus + paymentPayroll.overtime + paymentPayroll.others;
         
@@ -150,9 +239,9 @@ public class PaymentManagement {
 			
 			BufferedWriter bw = new BufferedWriter(new FileWriter(new File("transaction.txt"), true));
 			Date date = new Date();
-			Transaction transaction = new Transaction(employee.getEmployeeId(), amount, date);
+			Transaction transaction = new Transaction(employeeId, amount, date);
 	        transactions.add(transaction);
-	        String text = employee.getEmployeeId() + "," + amount + "," + date.toString();
+	        String text = employeeId + "," + amount + "," + date.toString();
 	        bw.write(text);
 	        bw.newLine();
 	        bw.close();
@@ -163,22 +252,5 @@ public class PaymentManagement {
 	      System.out.println("An error occurred.");
 	      e.printStackTrace();
 	   }
-    }
-    
-    
-    public List<Transaction> getEmployeeIndividualTransaction(int employeeId) {
-        List<Transaction> individualTransactions = new ArrayList<Transaction>();
-
-        Iterator<Transaction> iterator = transactions.iterator();
-
-        while(iterator.hasNext()){
-            Transaction transaction = iterator.next();
-
-			if(transaction.getEmployeeID() == employeeId) {
-                    individualTransactions.add(transaction);
-            }
-        }
-
-        return individualTransactions;
     }
 }

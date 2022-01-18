@@ -19,6 +19,30 @@ public class Payroll {
         this.others = others;
     }
 
+    public int getEmployeeID() {
+        return employeeID;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public double getBasicSalary() {
+        return basicSalary;
+    }
+
+    public double getOvertime() {
+        return overtime;
+    }
+
+    public double getBonus() {
+        return bonus;
+    }
+
+    public double getOthers() {
+        return others;
+    }
+
     @Override
     public String toString() {
         return "Payroll{" + "employeeID = " + employeeID + ", basicSalary = " + basicSalary + ", overtime = " + overtime + ", bonus = " + bonus + ", others = " + others + '}';

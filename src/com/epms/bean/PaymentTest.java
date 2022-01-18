@@ -15,10 +15,15 @@ public class PaymentTest {
         Employee employee3 = new Employee(3, "Joe", 'M');
         Employee employee4 = new Employee(4, "Eugene", 'M');
         
-        payment.init();
-//        payment.executePayment(employee4);
-//        payment.executePayment(employee2);
-//        payment.executePayment(employee3);
+        payment.loadTransactionData();
+        payment.loadPayrollData();
+        payment.getEmployeeIndividualTransaction();
+        
+//        payment.executePayment(employee4.getEmployeeId());
+//        payment.executePayment(employee2.getEmployeeId());
+//        payment.executePayment(employee3.getEmployeeId());
+        
+        
         payment.getEmployeeTransaction();
 		
 //        List<Transaction> transactions = payment.getEmployeeTransaction();
@@ -49,27 +54,27 @@ public class PaymentTest {
 //        System.out.println(payment.getEmployeePayroll(employee1));
 //        System.out.println(payment.getEmployeePayroll(employee2));
         
-        Scanner s = new Scanner(System.in);
-        int choice = 0;
-        do{
-            System.out.println("1 - Set Payroll, 2 - Get Payroll, 3 - Delete payroll, 4 - exit");
-            choice = s.nextInt();
-            switch(choice){
-                case 1:
-                    payment.setPayroll(employee1);
-                    break;
-                case 2:
-                    System.out.println(payment.getEmployeePayroll(employee1));
-                    break;
-                case 3:
-                    payment.deletePayroll(employee1);
-                    break;
-                case 4:
-                    break;
-                default:
-                    System.out.println("Enter valid number");
-            }
-        }while(choice!=4);
+//        Scanner s = new Scanner(System.in);
+//        int choice = 0;
+//        do{
+//            System.out.println("1 - Set Payroll, 2 - Get Payroll, 3 - Delete payroll, 4 - exit");
+//            choice = s.nextInt();
+//            switch(choice){
+//                case 1:
+//                    payment.setPayroll(employee1.getEmployeeId());
+//                    break;
+//                case 2:
+//                    System.out.println(payment.getEmployeePayroll(employee1.getEmployeeId()));
+//                    break;
+//                case 3:
+//                    payment.deletePayroll(employee1.getEmployeeId());
+//                    break;
+//                case 4:
+//                    break;
+//                default:
+//                    System.out.println("Enter valid number");
+//            }
+//        }while(choice!=4);
         
         
     }
