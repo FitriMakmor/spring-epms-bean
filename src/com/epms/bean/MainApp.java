@@ -16,33 +16,45 @@ public class MainApp {
 		obj.initReadAttendanceFile();
 		
 //		//displayEmployee
+//		System.out.println("getEmployees()");
 //		obj.displayListOfEmployee();
-		
-		//editEmployee
-		System.out.println("Before Update");
-		obj.displayListOfEmployee();
-		obj.setEmployee();
-		System.out.println("After Update");		
-		obj.displayListOfEmployee();
-		
-		
-//		//delete Employee Testing
-//		System.out.println("Before Delete");
-//		obj.displayListOfEmployee();
-//		System.out.println(obj.deleteEmployee());
-//		System.out.println("After Delete");
-//		obj.displayListOfEmployee();
-		
+//		
+////		System.out.println("------------------------------\n");
+////		//addEmployee
+////		System.out.println("Add Employee");
+////		obj.addEmployee();
+////		System.out.println("AfterAdd Employee");
+////		obj.displayListOfEmployee();
+//		
+////		System.out.println("------------------------------\n");
+//////		editEmployee
+////		System.out.println("Before Update");
+////		obj.displayListOfEmployee();
+////		obj.setEmployee();
+////		System.out.println("After Update");		
+////		obj.displayListOfEmployee();
+//		
+//		
+////		//delete Employee Testing
+////		System.out.println("------------------------------\n");
+////		System.out.println("Before Delete");
+////		obj.displayListOfEmployee();
+////		System.out.println(obj.deleteEmployee());
+////		System.out.println("After Delete");
+////		obj.displayListOfEmployee();
+//		
+//		//get Employee Details()
+//		
 	
 //		obj.getAttendanceList();
-		
+//		
 //		//attendance();
 //		System.out.println();
 //		obj.markAttendance();
 //		System.out.println();
 //		obj.getAttendanceList();
 //		System.out.println();
-//		
+////		
 //		
 //		//getSpecific Attendance
 //		Scanner input = new Scanner(System.in);
