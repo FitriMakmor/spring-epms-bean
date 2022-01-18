@@ -140,11 +140,31 @@ public class PaymentManagement {
     }
     
     public void getEmployeePayrolls(){
-        for( int key: payrolls.keySet() ){
-            System.out.print(key+" ");
-            System.out.println(payrolls.get(key));
-            Payroll temp = payrolls.get(key);
-        }
+//        for( int key: payrolls.keySet() ){
+//            System.out.print(key+" ");
+//            System.out.println(payrolls.get(key));
+//            Payroll temp = payrolls.get(key);
+//        }
+        
+        if(payrolls.isEmpty()) {
+			System.out.println("No Payrolls Available");
+		}
+		else {
+			System.out.println("\n------------------");
+			System.out.println(" Employee List");
+			System.out.println("--------------------\n");
+			System.out
+					.println("----------------------------------------------------------------------");
+			System.out.println("Employee ID\t|Basic Salary\t|Overtime\t|Bonus\t\t|Others");
+			System.out
+					.println("----------------------------------------------------------------------\n");
+			for(int key: payrolls.keySet()){
+				Payroll payroll = payrolls.get(key);				
+				System.out.printf("%d\t\t|RM%.2f\t|RM%.2f\t|RM%.2f\t|RM%.2f\n",
+						payroll.getEmployeeID(), payroll.getBasicSalary(), payroll.getOvertime(), 
+						payroll.getBonus(), payroll.getOthers());
+			}	
+	   }
 }
     
     public void setPayroll(int employeeId){
@@ -189,7 +209,7 @@ public class PaymentManagement {
                 double others = s.nextDouble();
                 payroll = new Payroll(employeeId, basic, ot, bonus, others);
                 payrolls.put(employeeId, payroll);
-                System.out.println(payroll.toString());
+//                System.out.println(payroll.toString());
                 updatePayrolls();
             }else{
                 System.out.println("Understood have a nice day");
@@ -217,17 +237,17 @@ public class PaymentManagement {
         try{
             BufferedWriter bw = new BufferedWriter(new FileWriter(new File("payroll.txt"), false));
             for( int key: payrolls.keySet() ){
-                System.out.print(key+" ");
-                System.out.println(payrolls.get(key));
+//                System.out.print(key+" ");
+//                System.out.println(payrolls.get(key));
                 Payroll temp = payrolls.get(key);
                 String update = temp.getEmployeeID()+","+temp.getBasicSalary()+","+temp.getOvertime()+","+temp.getBonus()+","+temp.getBonus();
                 bw.write(update);
                 bw.newLine();
             }
             bw.close();
-            System.out.println("Payrolls updated successfully!");
+            System.out.println("\nPayrolls updated successfully!");
         }catch(IOException e){
-            System.out.println("An error occured while updating the payrolls");
+            System.out.println("\nAn error occured while updating the payrolls");
             e.printStackTrace();
         }
     }
