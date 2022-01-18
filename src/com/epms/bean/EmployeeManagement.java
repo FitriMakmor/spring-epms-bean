@@ -185,8 +185,8 @@ public class EmployeeManagement{
 		   }
 	}
 	
-	//Old get Employee Details
-	public Employee getEmployee(int id) {
+	// inner method for getting Employee Details
+	private Employee getEmployee(int id) {
 		for(Employee e : arrayOfEmployee ) {
 			if(e.getEmployeeId() == id) {
 				return e;
@@ -194,6 +194,28 @@ public class EmployeeManagement{
 		}
 		
 		return null;
+	}
+	
+	// displays the employee details on the console when record is found
+	public void displayEmployeeDetails() {
+		System.out.print("Enter the Employee ID : ");
+		int id = input.nextInt();
+		
+		String text="";
+		for(Employee e : arrayOfEmployee ) {
+			if(e.getEmployeeId() == id) {
+				text+= "\n-----------------";
+				text+= "\nEmployee ID: " + e.getEmployeeId()+"\nName: "+e.getName()+"\nGender: ";
+				text+= e.getGender()=='M' ? "Male" : "Female";
+				text+= "\n-----------------";
+				System.out.println(text);
+			}
+		}
+		
+		if(text.equals("")) {
+			System.out.println("No employee record found for id: "+id);
+		}
+		
 	}
 	
 	//deleteEmployee

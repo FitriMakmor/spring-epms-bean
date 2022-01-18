@@ -5,6 +5,6 @@
 
 	<bean id="employeeManagement" class="com.epms.bean.EmployeeManagement">
 	</bean>
-	<bean id="employeeManagement2" class="com.epms.bean.EmployeeManagement2">
+	<bean id="paymentManagement" class="com.epms.bean.PaymentManagement">
 	</bean>
 </beans>
