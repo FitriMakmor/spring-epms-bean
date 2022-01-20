@@ -1,4 +1,4 @@
-package com.epms.bean;
+package cbse.epms.bean;
 
 import java.util.Scanner;
 
