@@ -71,7 +71,7 @@ public class PaymentManagement {
 			
 			System.out.println("Payroll Data Loaded");
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println("Exception while loading payroll data: " + e);
 		}
 		
     }
@@ -80,16 +80,19 @@ public class PaymentManagement {
     	System.out.println();
     	Iterator<Transaction> iterator = transactions.iterator();
     	
-    	System.out.println("List of transaction");
-        while(iterator.hasNext()){
-            Transaction transaction = iterator.next();
-            String text = 
-            		"Employee ID: " + transaction.getEmployeeID() +
-            		", Transaction Amount: " + transaction.getAmount() + 
-            		", Transaction Date: " + transaction.getDate().toString();
-            System.out.println(text);
-        }
-        
+    	if(transactions.isEmpty()) {
+			System.out.println("No Payrolls Available");
+		}else {
+	    	System.out.println("List of transaction");
+	        while(iterator.hasNext()){
+	            Transaction transaction = iterator.next();
+	            String text = 
+	            		"Employee ID: " + transaction.getEmployeeID() +
+	            		", Transaction Amount: " + transaction.getAmount() + 
+	            		", Transaction Date: " + transaction.getDate().toString();
+	            System.out.println(text);
+	        }
+		}
         return transactions;
     }
     
@@ -140,12 +143,6 @@ public class PaymentManagement {
     }
     
     public void getEmployeePayrolls(){
-//        for( int key: payrolls.keySet() ){
-//            System.out.print(key+" ");
-//            System.out.println(payrolls.get(key));
-//            Payroll temp = payrolls.get(key);
-//        }
-        
         if(payrolls.isEmpty()) {
 			System.out.println("No Payrolls Available");
 		}
@@ -167,24 +164,30 @@ public class PaymentManagement {
 	   }
 }
     
-    public void setPayroll(int employeeId){
-    	System.out.println();
-        Scanner s = new Scanner(System.in);
+    public void setPayroll(){
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Enter Employee ID : ");
+    	int employeeId = scan.nextInt();
+    	innerUpdatePayroll(employeeId);
+    }
+    
+    public void innerUpdatePayroll(int employeeId){
+        Scanner scan = new Scanner(System.in);
         
         if(payrolls.containsKey(employeeId)){
             System.out.println("Current payroll is " + payrolls.get(employeeId).toString());
             
             System.out.println("Enter updated basic salary: ");
-            double basic = s.nextDouble();
+            double basic = scan.nextDouble();
 
             System.out.println("Enter overtime amount: ");
-            double ot = s.nextDouble();
+            double ot = scan.nextDouble();
 
             System.out.println("Enter bonus amount: ");
-            double bonus = s.nextDouble();
+            double bonus = scan.nextDouble();
 
             System.out.println("Enter others amount: ");
-            double others = s.nextDouble();
+            double others = scan.nextDouble();
 
             payroll = new Payroll(employeeId, basic, ot, bonus, others);
             payrolls.put(employeeId, payroll);
@@ -194,25 +197,24 @@ public class PaymentManagement {
         else{
             System.out.println("Payroll for employee does not exist");
             System.out.println("Set payroll for employee? (Y/N)");
-            String choice = s.nextLine();
+            String choice = scan.nextLine();
             if("y".equals(choice)){
                 System.out.println("Enter basic salary: ");
-                double basic = s.nextDouble();
+                double basic = scan.nextDouble();
 
                 System.out.println("Enter overtime amount: ");
-                double ot = s.nextDouble();
+                double ot = scan.nextDouble();
 
                 System.out.println("Enter bonus amount: ");
-                double bonus = s.nextDouble();
+                double bonus = scan.nextDouble();
 
                 System.out.println("Enter others amount: ");
-                double others = s.nextDouble();
+                double others = scan.nextDouble();
                 payroll = new Payroll(employeeId, basic, ot, bonus, others);
                 payrolls.put(employeeId, payroll);
-//                System.out.println(payroll.toString());
                 updatePayrolls();
             }else{
-                System.out.println("Understood have a nice day");
+                System.out.println("Understood, have a nice day");
             }
         }
     }
@@ -237,8 +239,6 @@ public class PaymentManagement {
         try{
             BufferedWriter bw = new BufferedWriter(new FileWriter(new File("payroll.txt"), false));
             for( int key: payrolls.keySet() ){
-//                System.out.print(key+" ");
-//                System.out.println(payrolls.get(key));
                 Payroll temp = payrolls.get(key);
                 String update = temp.getEmployeeID()+","+temp.getBasicSalary()+","+temp.getOvertime()+","+temp.getBonus()+","+temp.getBonus();
                 bw.write(update);
@@ -252,13 +252,16 @@ public class PaymentManagement {
         }
     }
     
-    public void executePayment(int employeeId) {
-//    	System.out.println();
-//    	System.out.println("Enter employee ID: ");
-//    	
+    public void executePayment() {
+    	
+
+    	Scanner scan = new Scanner(System.in);
+    	System.out.print("Enter Employee ID : ");
+    	int employeeId = scan.nextInt();
+    	
         Payroll paymentPayroll = getEmployeePayroll(employeeId);
         if(paymentPayroll == null){
-            setPayroll(employeeId);
+            innerUpdatePayroll(employeeId);
             paymentPayroll = getEmployeePayroll(employeeId);
         }
         double amount = paymentPayroll.basicSalary + paymentPayroll.bonus + paymentPayroll.overtime + paymentPayroll.others;

@@ -106,7 +106,7 @@ public class EmployeeManagement{
 	}
 		
 	//Update Employee
-	public boolean setEmployee() {
+	public void setEmployee() {
 		String name; String gender;
 		System.out.print("Enter Employee  Id to update: ");
 		int id = input.nextInt();
@@ -125,15 +125,13 @@ public class EmployeeManagement{
 					char g = gender.charAt(0);
 					i.set(new Employee(id, name, g));
 					editRecordEmployee("employee.txt",id,name,g);
-					return true;
+					System.out.println("Record is updated successfully");
 				}
 				
 			}
 		}else {
-			System.out.println("Record not found");
-			
+			System.out.println("Record not found");	
 		}
-		return false;
 	}
 	
 	//update employee Data in "employee.txt"
@@ -219,20 +217,26 @@ public class EmployeeManagement{
 	}
 	
 	//deleteEmployee
-	public String deleteEmployee() {
+	public void deleteEmployee() {
 		System.out.print("Enter the Employee ID : ");
 		int id = input.nextInt();
+		boolean found = false;
 		Iterator<Employee> i = arrayOfEmployee.iterator();
 		while(i.hasNext()) {
 			Employee e = i.next();
 			if(e.getEmployeeId() == id) {
 				deleteRecordEmployee(id);
 				arrayOfEmployee.remove(e);
-				return "Sucessfully Remove "+id+" from Employee Data";
+				System.out.println("Sucessfully Remove "+id+" from Employee Data");
+				found =true;
+				break;
 			}
 			
 		}
-		return "Unable to remove "+id+" as it not exist in the Employee Data";
+		if(!found) {
+			System.out.println("Unable to remove "+id+" as it not exist in the Employee Data");	
+		}
+	
 	}
 	
 	//delete data Employee from "employee.txt"
@@ -371,8 +375,7 @@ public class EmployeeManagement{
 		return false;
 	}
 	
-	// add the attendance listt in "attendance.txt"
-	
+	// add the attendance list in "attendance.txt"	
 	public void writeAttendance() {
 		try {
 			
@@ -394,7 +397,6 @@ public class EmployeeManagement{
 	}
 
 	//get all attendance list
-	
 	public void getAttendanceList() {
 		if(arrayOfAttendance.isEmpty()) {
 			System.out.println("No Attendance List");
@@ -418,8 +420,9 @@ public class EmployeeManagement{
 	}
 
 	//get list of attendance for the specific employee
-	
-	public void getAttendance(int employeeId) {
+	public void getAttendance() {
+		System.out.print("Enter Employee ID : ");
+    	int employeeId = input.nextInt();
 		String text="";
 		System.out.println("An Attendance for "+employeeId);
 		for(Attendance str: arrayOfAttendance){
