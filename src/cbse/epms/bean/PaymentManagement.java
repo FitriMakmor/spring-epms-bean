@@ -124,7 +124,7 @@ public class PaymentManagement {
         }
         
         if(!exist) {
-        	System.out.println("Transaction Data for Employee ID [" + employeeId + "] does not exists.");
+        	System.out.println("Transaction Data for Employee ID [" + employeeId + "] does not exist.");
         }
         
         return individualTransactions;

@@ -46,6 +46,8 @@ public class EmployeeManagement{
 				} 
 				
 				sc.close();     //closes the scanner  
+				
+				System.out.println("Employee Data Loaded");
 		}  
 		catch(IOException e)  {  
 		e.printStackTrace();  
@@ -68,6 +70,8 @@ public class EmployeeManagement{
 			
 			}
 			sc.close();     //closes the scanner  
+			
+			System.out.println("Attendance Data Loaded");
 		}  
 		catch(IOException e)  {  
 			e.printStackTrace();  
@@ -98,7 +102,7 @@ public class EmployeeManagement{
 				bw.write(text);
 				bw.newLine();
 				bw.close();
-			    System.out.println("Succesfully Add Employee in Employee Record");
+			    System.out.println("Succesfully Added Employee into The Employee Record");
 			    } catch (IOException e) {
 			      System.out.println("An error occurred.");
 			      e.printStackTrace();
@@ -176,7 +180,7 @@ public class EmployeeManagement{
 			File dump = new File(filepath);
 			newFile.renameTo(dump);
 		
-		    System.out.println("Edit Succesfully");
+		    System.out.println("Edit Successful.");
 		    } catch (IOException e) {
 		      System.out.println("An error occurred.");
 		      e.printStackTrace();
@@ -227,14 +231,14 @@ public class EmployeeManagement{
 			if(e.getEmployeeId() == id) {
 				deleteRecordEmployee(id);
 				arrayOfEmployee.remove(e);
-				System.out.println("Sucessfully Remove "+id+" from Employee Data");
+				System.out.println("Successfully removed "+id+" from the Employee Data");
 				found =true;
 				break;
 			}
 			
 		}
 		if(!found) {
-			System.out.println("Unable to remove "+id+" as it not exist in the Employee Data");	
+			System.out.println("Unable to remove "+id+" as it does not exist in the Employee Data");	
 		}
 	
 	}
@@ -302,15 +306,15 @@ public class EmployeeManagement{
         System.out.println("Mark Attendance for "+strDate);
         
         if(checkExistDate(strDate)==true) {
-        	System.out.println("You already mark the Attendance Today. You want to re-mark the Attendance?\n"
-        			+ "Choose: 1. Re-mark, 2. No :");
+        	System.out.println("You have already marked the attendance for today. Would you like to re-mark the Attendance?\n"
+        			+ "Choose: 1. Re-mark, 2. Decline :");
         	int remark = input.nextInt();
         	if(remark == 1) {
         		deleteExistingRecordAttendance(strDate);
         	}
         	
         	else {
-        		return "No re-mark the attendance";
+        		return "Re-marking of attendance declined.";
         	}
         }
 
@@ -324,7 +328,7 @@ public class EmployeeManagement{
 	   }
 		
 	   writeAttendance();
-	   return "Succesfully Mark The Attendance !";
+	   return "Succesfully Marked The Attendance !";
 	}
 	
 	public void deleteExistingRecordAttendance(String date) {
@@ -389,7 +393,7 @@ public class EmployeeManagement{
 			}
 			bw.newLine();
 			bw.close();
-		    System.out.println("Attedance Succesfully");
+		    System.out.println("Attendance Successfully Marked.");
 		    } catch (IOException e) {
 		      System.out.println("An error occurred.");
 		      e.printStackTrace();
@@ -407,7 +411,7 @@ public class EmployeeManagement{
 			System.out.println("--------------------\n");
 			System.out
 					.println("----------------------------------------------------------------");
-			System.out.println("Date \t\tEmployee ID\tis Present Status");
+			System.out.println("Date \t\tEmployee ID\tIs Present Status");
 			System.out
 					.println("----------------------------------------------------------------\n");
 			for (Attendance str: arrayOfAttendance) {
@@ -424,7 +428,7 @@ public class EmployeeManagement{
 		System.out.print("Enter Employee ID : ");
     	int employeeId = input.nextInt();
 		String text="";
-		System.out.println("An Attendance for "+employeeId);
+		System.out.println("Attendance Record for "+employeeId);
 		for(Attendance str: arrayOfAttendance){
 			if(str.getEmployeeId() == employeeId) {
 				text =str.getDate()+":"+str.getEmployeeId()+"," + str.isPresent;
@@ -433,7 +437,7 @@ public class EmployeeManagement{
 		}
 		
 		if(text.equals("")) {
-			System.out.println("Record Attendance for Employee ID "+employeeId+" not found");
+			System.out.println("Attendance Record for Employee ID "+employeeId+" not found");
 		}
 	}
 	
