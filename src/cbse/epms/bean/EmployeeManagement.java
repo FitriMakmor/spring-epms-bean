@@ -318,6 +318,9 @@ public class EmployeeManagement{
         	}
         }
 
+		//removeArrayOfMarkAttendance,
+		arrayOfMarkAttendance.clear();
+		
 		System.out.println("Please State 1. Present, 2. Absent for Each Employee");
 		//loop the Employee Array
 		for(Employee str: arrayOfEmployee){
