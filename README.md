@@ -7,25 +7,25 @@ The Client-side of the system can be obtained from the following repository: htt
 
 Some of the operations that the system is able to perform: -
 - Employee Management
-  - Create new employee
+  - Create new employee  
   The software is able to create a new employee to be stored in the system.
 
-  - View employee information
+  - View employee information  
   The software is able to display information regarding an employee to the user.
 
 - Payroll Management
-  - Update payroll
+  - Update payroll  
   The software is able to update the payroll of an employee.
 
-  - Execute payment
+  - Execute payment  
   The software is able to execute the payment of an employee, creating a transaction record for the process.
 
-  - View transactions
+  - View transactions  
   The software is able to display information regarding the transactions to the user.
 
 - Attendance system
-  - View attendance
+  - View attendance  
   The software is able to display the attendance information of an employee to the user.
 
-  - Mark attendance
+  - Mark attendance  
   The software is able to mark the employee’s attendance as absent or present based on the user’s choice.
